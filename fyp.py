@@ -49,17 +49,17 @@ def run():
         
         #calculates traffic congestion at 100m
         print(color.BLUE + color.BOLD + '100M RSU RANGE' + color.END)
-        roadl100 = traci.lane.getLength('777864421#0-AddedOffRampEdge_3')
+        roadl100 = traci.lane.getLength('297396114#4')
     	print 'ROAD LENGTH \t\t\t:',roadl100
     	
-    	num100 = traci.edge.getLastStepVehicleNumber('777864421#0-AddedOffRampEdge')
+    	num100 = traci.edge.getLastStepVehicleNumber('297396114#4')
     	if num100 == 0:
     		speed100 = 0
     	else:	
-        	speed100 = traci.edge.getLastStepMeanSpeed('777864421#0-AddedOffRampEdge')
+        	speed100 = traci.edge.getLastStepMeanSpeed('297396114#4')
         print 'AVERAGE SPEED AT 100M \t\t:',speed100
         
-      	vnumber100 = traci.edge.getLastStepVehicleNumber('777864421#0-AddedOffRampEdge')
+      	vnumber100 = traci.edge.getLastStepVehicleNumber('297396114#4')
       	print 'NUMBER OF VEHICLES AT 100M \t:',vnumber100
       	
       	tcar100 = roadl100/5.1
@@ -81,21 +81,21 @@ def run():
       	
       	#calculates traffic congestion at 300m
       	print(color.BLUE + color.BOLD + '300M RSU RANGE' + color.END)
-      	roadl300 = traci.lane.getLength('777864421#0_0')+roadl100
+      	roadl300 = traci.lane.getLength('297396114#4')+roadl100
       	print 'ROAD LENGTH \t\t\t:',roadl300
     	
-     	num300 = traci.edge.getLastStepVehicleNumber('777864421#0')+vnumber100
+     	num300 = traci.edge.getLastStepVehicleNumber('297396114#4')+vnumber100
     	if num300 == 0:
     		speed300 = 0
     	else:
     		if num300 != 0 and num100 ==0 :
-    			speed300 = traci.edge.getLastStepMeanSpeed('777864421#0')
+    			speed300 = traci.edge.getLastStepMeanSpeed('297396114')
     		else:
-        		speed300 = traci.edge.getLastStepMeanSpeed('777864421#0')+traci.edge.getLastStepMeanSpeed('777864421#0-AddedOffRampEdge')
+        		speed300 = traci.edge.getLastStepMeanSpeed('297396114')+traci.edge.getLastStepMeanSpeed('297396114')
         		speed300 = speed300/2
         print 'AVERAGE SPEED AT 300M \t\t:',speed300
         
-      	vnumber300 = traci.edge.getLastStepVehicleNumber('777864421#0')+vnumber100
+      	vnumber300 = traci.edge.getLastStepVehicleNumber('297396114#4')+vnumber100
       	print 'NUMBER OF VEHICLES AT 300M \t:',vnumber300
       	
       	tcar300 = roadl300/5.1
@@ -114,24 +114,24 @@ def run():
       	
       	#calculates traffic congestion at 500m
       	print(color.BLUE + color.BOLD + '500M RSU RANGE' + color.END)
-      	roadl500 = traci.lane.getLength('777864422_1')+roadl100+roadl300
+      	roadl500 = traci.lane.getLength('297396114')+roadl100+roadl300
       	print 'ROAD LENGTH \t\t\t:',roadl500
     	
-        num500 = traci.edge.getLastStepVehicleNumber('777864422')+vnumber100+vnumber300
+        num500 = traci.edge.getLastStepVehicleNumber('297396114')+vnumber100+vnumber300
     	if num500 == 0:
     		speed500 = 0
     	else:
     		if num500 != 0 and num300 == 0 and num100 == 0:
-        		speed500 = traci.edge.getLastStepMeanSpeed('777864422')
+        		speed500 = traci.edge.getLastStepMeanSpeed('297396114')
         	elif num500 != 0 and num300 != 0 and num100 == 0:
-        		speed500 = traci.edge.getLastStepMeanSpeed('777864422')+traci.edge.getLastStepMeanSpeed('777864421#0')
+        		speed500 = traci.edge.getLastStepMeanSpeed('297396114')+traci.edge.getLastStepMeanSpeed('297396114')
         		speed500 = speed500/2
         	else:
-        		speed500 = traci.edge.getLastStepMeanSpeed('777864422')+traci.edge.getLastStepMeanSpeed('777864421#0')+traci.edge.getLastStepMeanSpeed('777864421#0-AddedOffRampEdge')
+        		speed500 = traci.edge.getLastStepMeanSpeed('297396114')+traci.edge.getLastStepMeanSpeed('297396114')+traci.edge.getLastStepMeanSpeed('297396114')
         		speed500 = speed500/3
         print 'AVERAGE SPEED AT 500M \t\t:',speed500
         
-      	vnumber500 = traci.edge.getLastStepVehicleNumber('777864422')+vnumber100+vnumber300
+      	vnumber500 = traci.edge.getLastStepVehicleNumber('297396114')+vnumber100+vnumber300
       	print 'NUMBER OF VEHICLES AT 500M \t:',vnumber500 
       	
       	tcar500 = roadl500/5.1
@@ -177,13 +177,12 @@ if __name__ == "__main__":
 
     # check binary
     if options.nogui:
-    
-    
-        sumoBinary = checkBinary('sumo')
+
+	sumoBinary = checkBinary('sumo')
     else:
         sumoBinary = checkBinary('sumo-gui')
 
-    # traci starts sumo as a subprocess and then this script connects and runs
+     # traci starts sumo as a subprocess and then this script connects and runs
     traci.start([sumoBinary, "-c", "fyp.sumo.cfg",
-                             "--fyp-output", "fyp.xml"])
+                             "--tripinfo-output", "tripinfo.xml"])
     run()
