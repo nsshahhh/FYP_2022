@@ -63,23 +63,52 @@ def run():
       	print 'NUMBER OF VEHICLES AT 100M \t:',vnumber100
       	
       	tcar100 = roadl100/5.1
-      	tcar100 = (tcar100*1)
+      	tcar100 = (tcar100*3)
       	tcar100 = tcar100*0.8
       	print 'MAXIMUM CAPACITY OF ROAD \t:',tcar100
       	
-      	if vnumber100 > tcar100 and speed100 < 3:
+      	if vnumber100 > tcar100 and speed100 < 5:
       		print(color.RED + color.BOLD + 'TRAFFIC CONGESTION DETECTED !' + color.END)
-		print(color.RED + color.BOLD + 'Alternative route JALAN FLORA' + color.END)
-      		print('SENT TRAFFIC CONGESTION ALERT TO ALL CARS')
+      		print('SENT TRAFFIC CONGESTION ALERT TO ALL CARS. Alternative route JALAN FLORA')
       		
       	else:
       		print('NO TRAFFIC CONGESTION AT 100M')
-		
       	
       		
       	
       	
       	print '------------------------------------------------'
+
+	#calculates traffic congestion at 300m
+      	print(color.BLUE + color.BOLD + '300M RSU RANGE' + color.END)
+      	roadl300 = traci.lane.getLength('297396114#3_0')+roadl100
+      	print 'ROAD LENGTH \t\t\t:',roadl300
+    	
+     	num300 = traci.edge.getLastStepVehicleNumber('297396114#3')+vnumber100
+    	if num300 == 0:
+    		speed300 = 0
+    	else:
+    		if num300 != 0 and num100 ==0 :
+    			speed300 = traci.edge.getLastStepMeanSpeed('297396114#3')
+    		else:
+        		speed300 = traci.edge.getLastStepMeanSpeed('297396114#4')+traci.edge.getLastStepMeanSpeed('297396114#3')
+        		speed300 = speed300/2
+        print 'AVERAGE SPEED AT 300M \t\t:',speed300
+        
+      	vnumber300 = traci.edge.getLastStepVehicleNumber('297396114#3')+vnumber100
+      	print 'NUMBER OF VEHICLES AT 300M \t:',vnumber300
+      	
+      	tcar300 = roadl300/5.1
+      	tcar300 = (tcar300*3)
+      	tcar300 = tcar300*0.8
+      	print 'MAXIMUM CAPACITY OF ROAD \t:',tcar300
+      	
+      	if vnumber300 > tcar300 and speed300 < 5:
+      		print(color.RED + color.BOLD + 'TRAFFIC CONGESTION DETECTED !' + color.END)
+      		print('SENT TRAFFIC CONGESTION ALERT TO ALL CARS. ')
+      		
+      	else:
+      		print('NO TRAFFIC CONGESTION AT 300M')
       	
    
       	
